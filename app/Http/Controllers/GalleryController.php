@@ -16,8 +16,13 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        $galleries = Gallery::all();
+        return Gallery::with('images')->paginate(10);
+        
+        return Gallery::with('user')->get();
+
         return $galleries;
+
+
     }
 
     /**
@@ -41,11 +46,17 @@ class GalleryController extends Controller
         $validated = $request->validated();
 
         $galleries = new Gallery();
-        $galleries->title = $validated['title'];
-        $galleries->description = $validated['description'];
-        $galleries->save();
+        $galleries ->title = $validated['title'];
+        $galleries ->description = $validated['description'];
+        $galleries -> user_id = auth()->id();
+        $galleries ->save();
 
-        return $galleries;
+        foreach ($request['images'] as $image) {
+            $galleries ->images()->save(
+                new Image(['img_url' => $image])
+            );
+        }
+        return $galleries ;
     }
 
     /**
@@ -56,8 +67,8 @@ class GalleryController extends Controller
      */
     public function show($id)
     {
-        $galleries = Gallery::find($id);
-        return $galleries;
+        return Gallery::with('images')->find($id);
+
     }
 
     /**
@@ -78,9 +89,15 @@ class GalleryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateGalleryRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+        $galleries = Gallery::find($id);
+        $galleries->title = $validated['title'];
+        $galleries->description = $validated['description'];
+        $galleries->save();
+
+        return $galleries;    
     }
 
     /**
@@ -91,6 +108,6 @@ class GalleryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Gallery::find($id)->delete();
     }
 }

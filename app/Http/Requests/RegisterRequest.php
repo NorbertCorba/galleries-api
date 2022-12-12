@@ -28,8 +28,6 @@ class RegisterRequest extends FormRequest
             'last_name' => 'required',
             'email' => 'required|email',
             'password' => 'required|confirmed|min:8|regex:/[0-9]/',
-
-
         ];
     }
 }

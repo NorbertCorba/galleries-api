@@ -18,7 +18,8 @@ class GalleryFactory extends Factory
     {
         return [
             'title' => $this->faker->randomElement(['Nature', 'Cars', 'Animals']),
-            'description' => $this->faker->text($maxNbChars = 100)
+            'description' => $this->faker->text($maxNbChars = 100),
+            'user_id' => $this->faker->numberBetween(1,10)
         ];
     }
 }

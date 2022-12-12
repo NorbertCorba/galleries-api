@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('/', GalleryController::class);
+Route::resource('/galleries', GalleryController::class);
 
 Route::controller(AuthController::class)->group(
     function () {

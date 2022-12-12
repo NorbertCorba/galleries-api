@@ -25,7 +25,7 @@ class CreateGalleryRequest extends FormRequest
     {
         return [
             'title' => 'required|min:2|max:255',
-            'description' => 'required|max:1000',
+            'description' => 'required|max:1000'
         ];
     }
 }

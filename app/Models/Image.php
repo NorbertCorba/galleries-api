@@ -13,6 +13,7 @@ class Image extends Model
     protected $fillable = [
         'title',
         'img_url',
+        'gallery_id'
     ];
 
 
